@@ -1,43 +1,52 @@
-const axios = require('axios');
-const fs = require('fs');
-
 module.exports.config = {
-    name: "goodbyenoti",
-    version: "1.0.0",
+	name: "join",
+	eventType: ["log:subscribe"],
+	version: "1.0.1",
+	credits: "ryuko",
+	description: "join and welcome notification",
+	dependencies: {
+		"fs-extra": ""
+	}
 };
 
-module.exports.handleEvent = async function ({ api, event }) {
-    if (event.logMessageType === "log:unsubscribe") {
-        const leftID = event.logMessageData.leftParticipantFbId;
-        let name = await api.getUserInfo(leftID).then(info => info[leftID].name);
+module.exports.run = async function({ api, event,Threads, botname, prefix}) {
+	const { join } = global.nodemodule["path"];
+	const { threadID } = event;
+	const data = (await Threads.getData(event.threadID)).data || {};
+    const checkban = data.banOut || []
+	const botID = await api.getCurrentUserID();
+	if  (checkban.includes(checkban[0])) return
+	else if (event.logMessageData.addedParticipants.some(i => i.userFbId == api.getCurrentUserID())) {
+        api.changeNickname(`${botname} ai`, threadID, botID);
+		return api.sendMessage(`bot connected successfully\n\nabout me?\nbot name : ${botname}\nbot prefix : ${prefix}\n\nbot data?\nusers : ${global.data.allUserID.length}\ngroups : ${global.data.allThreadID.get(botID).length}\n\nhow to use?\n${prefix}help (command list)\nai (question) - no prefix\ntalk (text) - no prefix\n\nryuko botpack v5`, threadID);
+	}
+	else {
+		try {
+			const { createReadStream, existsSync, mkdirSync } = global.nodemodule["fs-extra"];
+			let { threadName, participantIDs } = await api.getThreadInfo(threadID);
 
-        // Truncate name if it's too long
-        const maxLength = 15;
-        if (name.length > maxLength) {
-            name = name.substring(0, maxLength - 3) + '...';
-        }
+			const threadData = global.data.threadData.get(parseInt(threadID)) || {};
 
-        const groupInfo = await api.getThreadInfo(event.threadID);
-        const groupName = groupInfo.threadName || "this group";
-        const memberCount = groupInfo.participantIDs.length;
-        const background = groupInfo.imageSrc || "https://i.ibb.co/4YBNyvP/images-76.jpg";
+			var mentions = [], nameArray = [], memLength = [], i = 0;
+			
+			for (id in event.logMessageData.addedParticipants) {
+				const userName = event.logMessageData.addedParticipants[id].fullName;
+				nameArray.push(userName);
+				mentions.push({ tag: userName, id });
+				memLength.push(participantIDs.length - i++);
+			}
+			memLength.sort((a, b) => a - b);
+			
+			(typeof threadData.customJoin == "undefined") ? msg = "hello, {name}. welcome to {threadName}." : msg = threadData.customJoin;
+			msg = msg
+			.replace(/\{name}/g, nameArray.join(', '))
+			.replace(/\{type}/g, (memLength.length > 1) ?  'friends' : 'you')
+			.replace(/\{soThanhVien}/g, memLength.join(', '))
+			.replace(/\{threadName}/g, threadName);
 
-        const url = `https://mademoiselle-rrest-apis-rr28.onrender.com/api/goodbye?pp=https://api-canvass.vercel.app/profile?uid=${leftID}&nama=${encodeURIComponent(name)}&bg=${encodeURIComponent(background)}&member=${memberCount}`;
+			let formPush = { body: msg, mentions }
 
-        try {
-            const { data } = await axios.get(url, { responseType: 'arraybuffer' });
-            const filePath = './script/cache/goodbye_image.jpg';
-            fs.writeFileSync(filePath, Buffer.from(data));
-
-            api.sendMessage({
-                body: `👋 ${name} has left ${groupName}. We’ll miss you!`,
-                attachment: fs.createReadStream(filePath)
-            }, event.threadID, () => fs.unlinkSync(filePath));
-        } catch (error) {
-            console.error("Error fetching goodbye image:", error);
-            api.sendMessage({
-                body: `👋 ${name} has left ${groupName}.`
-            }, event.threadID);
-        }
-    }
-};
+			return api.sendMessage(formPush, threadID);
+		} catch (e) { return console.log(e) };
+	}
+}
