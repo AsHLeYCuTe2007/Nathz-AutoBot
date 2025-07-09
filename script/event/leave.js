@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 
 module.exports.config = {
-    name: "leave.js",
+    name: "leave",
     version: "1.0.0",
 };
 
