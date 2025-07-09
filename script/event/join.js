@@ -49,4 +49,4 @@ module.exports.run = async function({ api, event,Threads, botname, prefix}) {
 			return api.sendMessage(formPush, threadID);
 		} catch (e) { return console.log(e) };
 	}
-}
+};
