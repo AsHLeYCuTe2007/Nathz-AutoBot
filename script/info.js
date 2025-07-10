@@ -18,11 +18,11 @@ module.exports.run = async function({ api, event, admin }) {
   const mid = event.messageID;
 
   try {
-    const adminInfo = await api.getUserInfo(61578005764596);
-    const adminName = adminInfo[𝗡𝗮𝘁𝗵𝘇 𝗗𝗲𝘃].name;
-    const botUid = await api.getCurrentUserID(61577973702385);
-    const botInfo = await api.getUserInfo(𝗕𝗼𝘁𝘇);
-    const botName = botInfo[𝗡𝗮𝘁𝗵𝘇 𝗕𝗼𝘁𝘇].name;
+    const adminInfo = await api.getUserInfo(admin);
+    const adminName = adminInfo[admin].name;
+    const botUid = await api.getCurrentUserID();
+    const botInfo = await api.getUserInfo(botUid);
+    const botName = botInfo[botUid].name;
     const welcomeCardURL = `https://api.popcat.xyz/welcomecard?background=https://cdn.popcat.xyz/welcome-bg.png&text1=Autobot+Information&text2=${botName}&text3=Messenger+chatbot&avatar=https://api-canvass.vercel.app/profile?uid=${botUid}`;
 
     const cacheDir = __dirname + `/cache/`;
