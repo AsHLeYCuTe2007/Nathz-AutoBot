@@ -43,7 +43,7 @@ module.exports.run = async function({ api, event, admin }) {
 
     writer.on("finish", () => {
       api.sendMessage({
-        body: `🤖 | 𝗔𝘂𝘁𝗼𝗯𝗼𝘁 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻\n\n𝗕𝗼𝘁𝗻𝗮𝗺𝗲: ${botName}\n𝗕𝗼𝘁 𝗙𝗕: facebook.com/${botUid}\n𝗔𝗱𝗺𝗶𝗻 𝗻𝗮𝗺𝗲: ${adminName}\n𝗔𝗱𝗺𝗶𝗻 𝗙𝗕: facebook.com/${admin}\n\n𝗗𝗲𝘃: kaizenji-info.pages.dev`,
+        body: `🤖 | 𝗔𝘂𝘁𝗼𝗯𝗼𝘁 𝗜𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻\n\n𝗕𝗼𝘁𝗻𝗮𝗺𝗲: ${botName}\n𝗕𝗼𝘁 𝗙𝗕: facebook.com/${botUid}\n𝗔𝗱𝗺𝗶𝗻 𝗻𝗮𝗺𝗲: ${adminName}\n𝗔𝗱𝗺𝗶𝗻 𝗙𝗕: facebook.com/${admin}\n\n𝗗𝗲𝘃: Nathz-info.pages.dev`,
         attachment: fs.createReadStream(outputPath),
       }, tid, () => {
         try {
