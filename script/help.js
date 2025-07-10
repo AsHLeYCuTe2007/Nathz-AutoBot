@@ -58,13 +58,13 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
   ♡ 𝙲𝙾𝙼𝙼𝙰𝙽𝙳 𝙻𝙸𝚂𝚃 ♡
 ╚════════════╝\n\n`);
 
-      for (let i = start; i < end; i++) {   
-        helpMessage += formatFont(`➬${prefix}${commands[i]}\n`);
+      for (let i = start; i < end; i++) {
+        helpMessage += formatFont(`⊂⊃ ➠ ${prefix}${commands[i]}\n`);
       }
 
       helpMessage += formatFont(`\n𝙴𝚅𝙴𝙽𝚃 𝙻𝙸𝚂𝚃:\n\n`);
-      eventCommands.forEach((eventCommand) => {       
-        helpMessage += formatFont(`➬${prefix}${eventCommand}\n`);
+      eventCommands.forEach((eventCommand) => {
+        helpMessage += formatFont(`⊂⊃ ➠ ${prefix}${eventCommand}\n`);
       });
 
       helpMessage += formatFont(`\n𝗣𝗮𝗴𝗲:〔 ${page}/${totalPages} 〕\n`);
@@ -80,7 +80,7 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
   ♡ 𝙰𝙻𝙻 𝙲𝙾𝙼𝙼𝙰𝙽𝙳'𝚂 ♡
 ╚════════════╝\n\n`);
       commands.forEach((command) => {
-        helpMessage += formatFont(`➬${prefix}${command}\n`);
+        helpMessage += formatFont(`⊂⊃ ➠ ${prefix}${command}\n`);
       });
       helpMessage += formatFont(`\n𝗧𝗼𝘁𝗮𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀:〔 ${totalCommands} 〕\n`);
       helpMessage += formatFont(`To view information about a specific command, type "${prefix}help <command name>".`);
@@ -100,14 +100,14 @@ module.exports.run = async function({ api, event, enableCommands, args, Utils, p
       cooldown,
       hasPrefix
     } = command;
-    const roleMessage = role !== undefined ? (role === 0 ? '➬ Permission: user' : (role === 1 ? '➬ Permission: admin' : (role === 2 ? '➬ Permission: thread Admin' : (role === 3 ? '➬ Permission: super Admin' : '')))) : '';
-    const aliasesMessage = aliases.length ? formatFont(`➬ Aliases: ${aliases.join(', ')}\n`) : '';
-    const descriptionMessage = description ? formatFont(`➬ Description: ${description}\n`) : '';
-    const usageMessage = usage ? formatFont(`➬ Usage: ${usage}\n`) : '';
-    const creditsMessage = credits ? formatFont(`➬ Credits: ${credits}\n`) : '';
-    const versionMessage = version ? formatFont(`➬ Version: ${version}\n`) : '';
-    const cooldownMessage = cooldown ? formatFont(`➬ Cooldown: ${cooldown} second(s)\n`) : '';
-    const message = formatFont(`〔 Command 〕\n\n➬ Name: ${name}\n${versionMessage}${roleMessage}\n${aliasesMessage}${descriptionMessage}${usageMessage}${creditsMessage}${cooldownMessage}`);
+    const roleMessage = role !== undefined ? (role === 0 ? '➠ Permission: user' : (role === 1 ? '➠ Permission: admin' : (role === 2 ? '➠ Permission: thread Admin' : (role === 3 ? '➠ Permission: super Admin' : '')))) : '';
+    const aliasesMessage = aliases.length ? formatFont(`➠ Aliases: ${aliases.join(', ')}\n`) : '';
+    const descriptionMessage = description ? formatFont(`➠ Description: ${description}\n`) : '';
+    const usageMessage = usage ? formatFont(`➠ Usage: ${usage}\n`) : '';
+    const creditsMessage = credits ? formatFont(`➠ Credits: ${credits}\n`) : '';
+    const versionMessage = version ? formatFont(`➠ Version: ${version}\n`) : '';
+    const cooldownMessage = cooldown ? formatFont(`➠ Cooldown: ${cooldown} second(s)\n`) : '';
+    const message = formatFont(`〔 Command 〕\n\n➠ Name: ${name}\n${versionMessage}${roleMessage}\n${aliasesMessage}${descriptionMessage}${usageMessage}${creditsMessage}${cooldownMessage}`);
     api.sendMessage(message, event.threadID, event.messageID);
   } else {
     api.sendMessage(formatFont('Command not found.'), event.threadID, event.messageID);
@@ -135,4 +135,4 @@ module.exports.handleEvent = async function({
 if (body?.toLowerCase().startsWith('prefix')) {
   api.sendMessage(message, threadID, messageID);
 }
-                                     }
+  }
