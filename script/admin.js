@@ -1,6 +1,3 @@
-const { config } = global.GoatBot;
-const { writeFileSync } = require("fs-extra");
-
 module.exports = {
 	config: {
 		name: "admin",
