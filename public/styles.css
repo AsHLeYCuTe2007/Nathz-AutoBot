@@ -75,7 +75,7 @@ label {
 }
 
 .navbar a:hover {
-  color: gray;
+  color: blue;
 }
 
 .navbar-brand {
@@ -114,7 +114,7 @@ label {
 }
 
 .success-message {
-    color: green;
+    color: yellow;
     margin-top: 10px;
     font-size: 12px;
 }
